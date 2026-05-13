@@ -29,7 +29,7 @@ roadmap 中列出的每个 change 都必须对应 `.workflow/changes/<change-id>
     来源意图：
       - 编号：（待补充）
     路径：.workflow/changes/<change-id>/
-    下一步：design-solution
+    下一步：specify-change
 
 ## 暂缓 / 放弃
 
