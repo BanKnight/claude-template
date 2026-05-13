@@ -20,7 +20,7 @@
 
 - 不猜测目标 change；不明确时必须让用户选择。
 - 先检查当前 change 状态，再决定是否创建 design。
-- 只推进 `design-change` 阶段，不跳到 `plan-task`、实现、验证或沉淀。
+- 只推进 `design-change` 阶段，不跳到 `plan-change`、实现、验证或沉淀。
 - 创建 design 前必须读取已完成依赖：change intents、change specs、必要的长期 docs。
 - 模板、规则和上下文是给 Agent 的约束，不要把说明性注释或规则原样复制到最终 design 文件。
 - 创建后必须验证文件存在，再汇报进度和解锁的下一步。
@@ -38,12 +38,12 @@
 - 涉及安全、性能、兼容性、权限、错误处理或发布风险。
 - specs 中存在实现路径不明确、需要先做技术决策的要求。
 - 用户明确要求先沉淀 how 设计。
-- 后续 `plan-task` 无法在没有设计材料的情况下安全拆解任务。
+- 后续 `plan-change` 无法在没有设计材料的情况下安全拆解任务。
 
 如果 change 很轻量，且 specs 已足以指导实现，可以只创建 `overview.md` 说明：
 
 - 为什么不需要更多设计子域。
-- 可以直接进入 `plan-task` 的依据。
+- 可以直接进入 `plan-change` 的依据。
 - 是否存在后续 `distill-how` 候选。
 
 ## change 参数
@@ -71,7 +71,7 @@
 
 - roadmap 中某个 change 已经完成 `specify-change`，但还没有 design。
 - 用户确认要开始设计某个 change 的 how。
-- 后续 `plan-task` 或实现前缺少设计依据。
+- 后续 `plan-change` 或实现前缺少设计依据。
 - change 涉及架构、接口、数据、UI/UX、业务规则、异常处理、迁移、性能、安全等需要明确取舍的内容。
 
 不要在以下情况强行进入：
@@ -131,7 +131,7 @@ docs/runbooks/
 3. `.workflow/changes/<change-id>/specs/` 是否存在。
 4. `.workflow/changes/<change-id>/design/` 是否已存在。
 5. roadmap 中该 change 的下一步是否为 `design-change`，或是否仍缺少 design。
-6. 是否满足 design 创建条件；如果不满足，是否只需要 `overview.md` 说明可直接进入 `plan-task`。
+6. 是否满足 design 创建条件；如果不满足，是否只需要 `overview.md` 说明可直接进入 `plan-change`。
 
 根据状态处理：
 
@@ -182,7 +182,7 @@ docs/runbooks/
 
 7. 使用 `.workflow/templates/changes/design/` 下对应模板作为结构基础。
 8. 设计必须说明关键决策、权衡、风险和开放问题。
-9. 设计必须能指导 `plan-task`，但不要直接拆 tasks。
+9. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
 10. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
 11. 创建后验证文件存在，再汇报进度。
 
@@ -241,7 +241,7 @@ docs/architecture/adr/
 - 目标 change。
 - 创建或更新了哪些 design 子域文件。
 - 当前阶段已完成：`design-change`。
-- 解锁的下一步：`plan-task`。
+- 解锁的下一步：`plan-change`。
 - 哪些内容可能在 `distill-how` 阶段沉淀到长期 docs。
 - 如果仍有阻塞，说明阻塞原因。
 
@@ -256,4 +256,4 @@ docs/architecture/adr/
 - 关键决策、权衡、风险和开放问题齐全。
 - 没有把 tasks、实现代码或长期 docs 沉淀混入本阶段。
 - 已验证 design 文件存在。
-- 下一步可以进入 `plan-task`。
+- 下一步可以进入 `plan-change`。

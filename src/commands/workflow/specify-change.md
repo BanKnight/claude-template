@@ -110,7 +110,7 @@ docs/architecture/
 ```
 
 7. 每条 requirement 必须可验证，并至少包含一个 scenario。
-8. 不把 how、架构方案、技术选型、任务拆解写进 spec；这些属于 `design-change` 或 `plan-task`。
+8. 不把 how、架构方案、技术选型、任务拆解写进 spec；这些属于 `design-change` 或 `plan-change`。
 9. 如果发现 change 范围过大或 capability 边界不清，先向用户确认，不要强行写 spec。
 10. 创建后验证文件存在，再汇报进度。
 
