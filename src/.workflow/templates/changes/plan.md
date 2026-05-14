@@ -1,5 +1,29 @@
 # plan
 
+## 必须读取的上下文
+
+<!-- implement-change 启动前必须读取这些路径。必须具体到文件或目录，不要只写“参考 docs”。 -->
+
+### 运行态上下文
+
+- `.workflow/changes/<change-id>/intents.md`：
+- `.workflow/changes/<change-id>/specs/`：
+- `.workflow/changes/<change-id>/design/`：
+- `.workflow/changes/<change-id>/tasks.md`：
+
+### 长期文档上下文
+
+- `docs/specs/...`：
+- `docs/design/...`：
+- `docs/architecture/...`：
+- `docs/runbooks/...`：
+
+### 代码上下文
+
+<!-- 列出实现前必须阅读的关键代码目录或文件。 -->
+
+- `src/...`：
+
 ## Change 概览
 
 - change-id：

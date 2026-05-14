@@ -13,7 +13,7 @@
 
 其中：
 
-- `plan.md` 负责给后续 `implement-task` 提供足够上下文，尤其是必须遵循的长期文档、当前 change 的 specs/design、实现边界和风险。
+- `plan.md` 负责给后续 `implement-change` 提供足够上下文，尤其是必须遵循的长期文档、当前 change 的 specs/design、实现边界和风险。
 - `tasks.md` 负责把实现计划拆成可执行、可验收的任务清单。
 
 `plan-change` 不执行代码实现。
@@ -82,6 +82,7 @@ docs/runbooks/
 - `.workflow/changes/<change-id>/design/` 是 how 基线。
 - `docs/` 是项目长期约束来源，必须用于避免实现走偏。
 - `plan.md` 必须显式列出本次实现需要遵循的长期 docs 文档路径。
+- `plan.md` 必须列出 `implement-change` 启动前必须读取的上下文清单，包括 change specs、change design、长期 docs 和关键代码区域。
 - 如果无法判断哪些 docs 相关，应搜索 docs 并根据 capability、子域、模块、风险关键词定位。
 - 已有 `plan.md` 或 `tasks.md` 存在时，读取后更新，不要直接覆盖。
 
@@ -143,10 +144,11 @@ docs/runbooks/
 
 ## 实现上下文规则
 
-`plan.md` 的核心价值是防止后续 `implement-task` 走偏。
+`plan.md` 的核心价值是防止后续 `implement-change` 走偏。
 
 因此 `plan.md` 必须包含：
 
+- 必须读取的上下文清单。
 - change-id 与所属 version。
 - 本 change 的来源 intents。
 - 本 change 的 specs 路径。
@@ -207,6 +209,7 @@ docs/runbooks/<topic>.md
 
 `plan.md` 至少包含：
 
+- 必须读取的上下文清单
 - change 概览
 - 输入依据
 - 必须遵循的长期文档
@@ -237,6 +240,8 @@ docs/runbooks/<topic>.md
 - 分组任务
 - 每个任务的验收标准
 - 对应 plan/spec/design 引用
+- 必读上下文
+- 修改范围
 - 阻塞项或依赖关系
 - 可并行标记与不可并行原因
 - 建议执行顺序
@@ -249,7 +254,7 @@ docs/runbooks/<topic>.md
 - 创建或更新了 `plan.md` 和 `tasks.md`。
 - `plan.md` 引用了哪些长期 docs。
 - 当前阶段已完成：`plan-change`。
-- 解锁的下一步：`implement-task`。
+- 解锁的下一步：`implement-change`。
 - 如果仍有阻塞，说明阻塞原因。
 
 ## 退出条件
@@ -264,4 +269,4 @@ docs/runbooks/<topic>.md
 - `tasks.md` 已将计划拆成可执行、可验收任务。
 - 没有修改代码。
 - 已验证 `plan.md` 和 `tasks.md` 存在。
-- 下一步可以进入 `implement-task`。
+- 下一步可以进入 `implement-change`。
