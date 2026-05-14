@@ -193,6 +193,25 @@ docs/runbooks/<topic>.md
 11. 不要在 `plan-change` 中修改代码。
 12. 创建后验证两个文件都存在，再汇报进度。
 
+## implement-change 可执行性规则
+
+`plan-change` 的产出必须让后续 `implement-change` 只通过 `plan.md` 与 `tasks.md` 就能恢复实现上下文。
+
+因此必须避免以下问题：
+
+- `plan.md` 没有列出必须读取的长期 docs 或 docs 检索线索。
+- `plan.md` 没有列出关键代码区域或实现入口。
+- `plan.md` 没有说明 design 缺省理由。
+- `plan.md` 没有列出风险与验证关注点。
+- `tasks.md` 没有写清依赖关系。
+- `tasks.md` 没有标明可并行性或同文件冲突。
+- `tasks.md` 粒度过大，无法独立完成和验收。
+- `tasks.md` 缺少验收标准。
+- `tasks.md` 无法追溯到 spec/design/plan。
+- `tasks.md` 没有说明必读上下文和修改范围。
+
+如果无法满足这些要求，不要产出看似完整但无法执行的 plan/tasks；应把缺口记录为阻塞项或开放问题。
+
 ## plan 写入格式
 
 优先使用模板：
