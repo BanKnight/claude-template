@@ -14,6 +14,20 @@
 
 本命令不把设计结论直接写入 `docs/`。长期 design、architecture、ADR 等沉淀由后续 `distill-how` 在验证后完成。
 
+## 参考资料
+
+执行时按需读取：
+
+- [product.md](./references/design-change/product.md) — 产品目标、能力边界、用户路径与可验证需求。
+- [ui-ux.md](./references/design-change/ui-ux.md) — 页面体验、交互路径、信息层级、视觉规范与可用性。
+- [frontend.md](./references/design-change/frontend.md) — 前端模块、组件边界、状态管理、路由和工程约束。
+- [architecture.md](./references/design-change/architecture.md) — 系统分层、模块关系、技术选型、边界与演进策略。
+- [api.md](./references/design-change/api.md) — 接口定义、请求响应、协议、鉴权与兼容性。
+- [data.md](./references/design-change/data.md) — 数据模型、表结构、字段、关系、索引与迁移。
+- [business-rules.md](./references/design-change/business-rules.md) — 业务概念、业务规则、状态流转、计算规则与约束。
+- [error-handling.md](./references/design-change/error-handling.md) — 异常场景、错误码、失败处理、重试、降级与边界情况。
+- [technology-research.md](./references/design-change/technology-research.md) — 技术版本、依赖选择与供应链安全检索规则。
+
 ## 阶段推进原则
 
 `design-change` 是本项目工作流中的 change 级 design 阶段：
@@ -99,6 +113,8 @@ docs/design/
 docs/architecture/
 docs/runbooks/
 .workflow/changes/<change-id>/design/
+src/commands/workflow/references/design-change/<subdomain>.md
+src/commands/workflow/references/design-change/technology-research.md
 ```
 
 读取规则：
@@ -106,6 +122,9 @@ docs/runbooks/
 - `.workflow/changes/<change-id>/intents.md` 是 change 来源上下文。
 - `.workflow/changes/<change-id>/specs/` 是本 change 的 what 基线。
 - `docs/` 用于识别项目现有约束、长期设计、架构边界和可复用模式。
+- 根据“子域路由规则”判断子域，不要只凭子域名称泛泛填写。
+- 创建或更新某个子域 design 前，必须读取对应的 `references/design-change/<subdomain>.md`，并按其中输入检查、关注点、工作方式和输出结构完成设计。
+- 涉及新技术、版本选择、新依赖或第三方服务时，必须读取 `technology-research.md` 并执行检索。
 - 已有 change design 存在时，优先更新，不要直接覆盖。
 - 读取依赖材料后再创建 design，不要凭 change-id 或文件名猜测方案。
 
@@ -142,30 +161,55 @@ docs/runbooks/
 
 ## 子域路由规则
 
-`design-change` 按子域拆分 design 文件，但只创建本 change 需要的设计文件。
+`design-change` 按子域拆分 design 文件，但只创建本 change 需要的设计文件。子域不是固定清单式填空，而是帮助 Agent 使用对应专业视角完成 how 设计。
 
 常见子域：
 
-| 子域 | 触发场景 | 输出文件 |
-|---|---|---|
-| overview | 所有非平凡 change，用于汇总上下文、设计范围和子域索引 | `overview.md` |
-| product | 用户流程、产品边界、信息架构、体验路径 | `product.md` |
-| ui-ux | 页面结构、交互模式、页面状态、可用性 | `ui-ux.md` |
-| frontend | 前端模块、组件边界、状态管理、路由 | `frontend.md` |
-| architecture | 系统分层、模块关系、技术选型、演进策略 | `architecture.md` |
-| api | 接口定义、请求响应、协议、鉴权、兼容性 | `api.md` |
-| data | 数据模型、表结构、迁移、索引、一致性 | `data.md` |
-| business-rules | 业务规则、状态流转、计算规则、约束 | `business-rules.md` |
-| error-handling | 异常场景、错误码、失败处理、重试、降级 | `error-handling.md` |
-| risks | 跨子域风险、权衡、开放问题 | `risks.md` |
+| 子域 | 触发场景 | 输出文件 | 专业 reference |
+|---|---|---|---|
+| overview | 所有非平凡 change，用于汇总上下文、设计范围和子域索引 | `overview.md` | 无，直接使用 overview 模板 |
+| product | 产品目标、能力边界、用户流程或信息架构不清晰 | `product.md` | `product.md` |
+| ui-ux | 页面结构、交互模式、页面状态或可用性需要明确 | `ui-ux.md` | `ui-ux.md` |
+| frontend | 前端模块、组件、状态管理、路由或工程约束需要明确 | `frontend.md` | `frontend.md` |
+| architecture | 跨模块、技术选型、系统边界、依赖关系或演进策略需要明确 | `architecture.md` | `architecture.md` |
+| api | 接口、协议、请求响应、鉴权或兼容性需要明确 | `api.md` | `api.md` |
+| data | 数据模型、迁移、索引、一致性或查询写入路径需要明确 | `data.md` | `data.md` |
+| business-rules | 业务规则、状态机、计算规则或边界情况需要明确 | `business-rules.md` | `business-rules.md` |
+| error-handling | 失败路径、错误码、重试、降级、补偿或恢复策略需要明确 | `error-handling.md` | `error-handling.md` |
+| risks | 跨子域风险、权衡、开放问题集中收口 | `risks.md` | 无，汇总其他子域风险 |
 
-规则：
+路由原则：
 
-- `overview.md` 用于说明本次 design 选择了哪些子域，以及为什么没有选择其他子域。
-- 只有相关子域才创建对应文件。
-- 不要为了显得完整而创建空设计文件。
-- 如果设计过程中发现新子域必要，可以补充创建对应文件。
-- 如果某个子域只是几句话，可以写入 `overview.md`，不必单独建文件。
+- 先用 `overview.md` 做路由和总览。
+- 只创建必要子域，不创建空文件。
+- 子域少但内容完整，比子域多但空泛更好。
+- 如果一个问题跨多个子域，应在各自子域写对应视角，并在 `risks.md` 收口跨域风险。
+- 如果某个子域内容很少，可写在 `overview.md`，不必单独建文件。
+- 选择某个子域后，必须读取对应专业 reference，再写该子域 design。
+
+## 子域最佳实践
+
+创建或更新任何 design 子域前，必须按需读取对应专业 reference。
+
+使用方式：
+
+- 先用 `overview.md` 说明本 change 选择哪些子域，以及为什么不选择其他子域。
+- 对每个被选择的子域，先读取对应 reference，再按其中输入检查、关注点、工作方式和输出结构完成设计。
+- 如果子域内容不足以单独成文，写入 `overview.md`，不要创建空文件。
+- 如果发现跨子域风险，用 `risks.md` 收口。
+- 子域 design 必须能指导 `plan-change`，不能只是概念描述。
+
+## 技术版本与依赖安全规则
+
+AI 的内置知识可能过期。涉及技术栈、框架、库、SDK、运行时、构建工具、外部服务或包版本时，必须按以下规则处理：
+
+1. 读取 `src/commands/workflow/references/design-change/technology-research.md`。
+2. 搜索当前官方文档、release notes、包元数据或安全公告。
+3. 核对项目现有技术栈和兼容性。
+4. 在 design 中记录采用的版本/方案、检索来源、检索时间和取舍原因。
+5. 对 npm 依赖执行供应链安全检查：默认不选发布不足 7 天的版本，除非用户明确确认。
+
+不要只凭模型记忆决定技术版本或新增依赖。
 
 ## 执行规则
 
@@ -173,18 +217,21 @@ docs/runbooks/
 2. 检查 change 当前状态。
 3. 读取 change intents 与 specs。
 4. 按需读取 `docs/` 中相关长期上下文。
-5. 判断本 change 需要哪些设计子域。
-6. 创建或更新：
+5. 根据子域路由规则判断本 change 需要哪些设计子域。
+6. 对每个被选择的子域，读取 `references/design-change/<subdomain>.md`。
+7. 如果涉及技术栈、版本、依赖或外部服务，读取 `technology-research.md` 并完成检索。
+8. 创建或更新：
 
 ```text
 .workflow/changes/<change-id>/design/<subdomain>.md
 ```
 
-7. 使用 `.workflow/templates/changes/design/` 下对应模板作为结构基础。
-8. 设计必须说明关键决策、权衡、风险和开放问题。
-9. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
-10. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
-11. 创建后验证文件存在，再汇报进度。
+9. 使用 `.workflow/templates/changes/design/` 下对应模板作为结构基础。
+10. 设计必须说明关键决策、权衡、风险和开放问题。
+11. 涉及技术版本或依赖时，设计必须记录检索来源、检索时间、版本选择依据和供应链风险判断。
+12. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
+13. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
+14. 创建后验证文件存在，再汇报进度。
 
 ## 与长期沉淀的关系
 
@@ -234,6 +281,15 @@ docs/architecture/adr/
 - 开放问题
 - 后续沉淀候选
 
+如果涉及技术版本或依赖选择，还必须说明：
+
+- 检索来源
+- 检索时间
+- 选定版本或版本范围
+- 版本选择依据
+- npm 依赖是否满足发布至少 7 天规则
+- 供应链风险判断
+
 ## 完成后输出
 
 完成后简短汇报：
@@ -241,6 +297,7 @@ docs/architecture/adr/
 - 目标 change。
 - 创建或更新了哪些 design 子域文件。
 - 当前阶段已完成：`design-change`。
+- 如果涉及技术版本或依赖选择，说明检索了哪些资料、采用哪个版本/方案、是否满足 npm 7 天规则。
 - 解锁的下一步：`plan-change`。
 - 哪些内容可能在 `distill-how` 阶段沉淀到长期 docs。
 - 如果仍有阻塞，说明阻塞原因。
@@ -253,7 +310,10 @@ docs/architecture/adr/
 - change intents 与 specs 已读取。
 - 需要的设计子域已明确。
 - 相关子域 design 文件已创建或更新。
+- 已根据子域路由规则完成子域选择。
+- 已按每个已选子域对应的 reference 完成专业视角检查。
 - 关键决策、权衡、风险和开放问题齐全。
+- 涉及技术版本或依赖时，已完成检索并记录版本依据与供应链风险。
 - 没有把 tasks、实现代码或长期 docs 沉淀混入本阶段。
 - 已验证 design 文件存在。
 - 下一步可以进入 `plan-change`。
