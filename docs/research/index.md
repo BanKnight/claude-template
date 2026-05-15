@@ -9,3 +9,4 @@
 ## 文档
 
 - [skills-benchmark-mattpocock-openspec.md](./skills-benchmark-mattpocock-openspec.md) — 对标 mattpocock/skills 与 OpenSpec，提炼工作流约束、IO规范和可落地优化点。
+- [spec-kit-constitution.md](./spec-kit-constitution.md) — 调研 spec-kit constitution 命令与模板机制，并对比当前 workflow constitution 的适配差异。

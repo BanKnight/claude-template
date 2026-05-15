@@ -5,6 +5,8 @@
 ## 定位
 
 - `docs/` 是长期沉淀区，用于保存已验证、可复用、可评审的主线知识。
+- 参与需求讨论、roadmap、spec、design、implementation、verify 或 distill 前，应先读取 `docs/project.md`，建立项目 big picture。
+- `docs/project.md` 是项目认知入口，不是按需附加材料；即使后续只处理局部任务，也应先理解项目整体定位、领域概念与长期准则。
 - 长期 WHAT 放入 `docs/specs/`；长期 design 放入 `docs/design/`；系统级 HOW、架构边界、ADR 放入 `docs/architecture/`；操作手册放入 `docs/runbooks/`。
 - 运行态意图、活跃 roadmap、单次 change 过程、任务执行状态和 verify 证据不要放在 `docs/`，应放在 `.workflow/`。
 - `docs/` 不直接接收未验证的 change design；长期沉淀应由 `sync-contract` 或 `distill-how` 在验证后完成。
@@ -14,6 +16,7 @@
 ```text
 docs/
 ├── AGENTS.md                           # docs 治理规则，进入 docs 前必须读取
+├── project.md                          # 项目认知 big picture，渐进式补全
 ├── index.md                            # docs 本层索引，只描述直接子目录和直接文档
 ├── templates/                          # 长期文档模板目录
 ├── specs/                              # 长期 WHAT：能力规格、行为契约、可验证需求
@@ -23,6 +26,13 @@ docs/
 ```
 
 ## 写入边界
+
+### `docs/project.md`
+
+- 保存项目认知 big picture：项目定位、用户场景、领域概念、长期开发准则。
+- 本文件渐进式补全，不要求一次完整。
+- change 完成并通过 verify 后，应检查是否有长期项目认知需要提炼到这里。
+- 不记录单次需求、任务状态或临时实现细节。
 
 ### `docs/specs/`
 
@@ -81,8 +91,8 @@ docs/
 ## 与 .workflow 的关系
 
 - `.workflow/` 负责运行态：intents、roadmap、changes、tasks、verify、archive。
-- `docs/` 负责长期态：主线 spec、长期 design、architecture、runbooks。
-- 从 `.workflow/` 进入 `docs/` 的内容必须经过对应命令：`sync-contract` 或 `distill-how`。
+- `docs/` 负责长期态：project big picture、主线 spec、长期 design、architecture、runbooks。
+- 从 `.workflow/` 进入 `docs/` 的内容必须经过对应命令：`sync-contract`、`distill-how` 或 `describe-project`。
 - 归档材料保留在 `.workflow/archive/`，不要为了历史追溯把完整 archive 复制到 `docs/`。
 
 ## 禁止事项

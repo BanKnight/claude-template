@@ -5,6 +5,8 @@
 ## 定位
 
 - `.workflow/` 是运行态区域，用于保存尚未归档的意图池、活跃 roadmap、当前 changes、执行证据与归档上下文。
+- `.workflow/roadmap.md` 是 workflow big picture，用于理解当前 versions/changes 和接活方式。
+- 项目认知 big picture 放在 `docs/project.md`，不要放在 `.workflow/`。
 - `.workflow/` 不保存长期知识基线；长期规格、长期设计、架构、ADR、runbooks 等应在验证后沉淀到 `docs/`。
 - 需要理解项目 big picture 时，不要只读单个文件，应按需读取 `docs/`、`.workflow/roadmap.md`、`.workflow/changes/` 与 `.workflow/archive/`。
 
@@ -50,6 +52,7 @@
 
 ## 阶段产物规则
 
+- `describe-project` 可在任意阶段更新 `docs/project.md`，用于补全项目认知 big picture。
 - `clarify-intent` 只更新 `.workflow/intents.md`。
 - `plan-roadmap` 更新 `.workflow/roadmap.md`，建立或更新 `.workflow/changes/<change-id>/intents.md`，并从 `.workflow/intents.md` 移出已分配意图。
 - `specify-change` 只更新 `.workflow/changes/<change-id>/specs/`，用于明确 what。

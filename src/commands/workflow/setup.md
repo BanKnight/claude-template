@@ -36,6 +36,7 @@ src/
 │   └── archive/
 └── docs/
     ├── AGENTS.md
+    ├── project.md
     ├── index.md
     ├── templates/
     ├── specs/
@@ -99,6 +100,7 @@ CLAUDE.md
 ```text
 docs/
 ├── AGENTS.md
+├── project.md
 ├── index.md
 ├── templates/
 ├── specs/
@@ -157,6 +159,7 @@ docs/templates/
 完成前确认：
 
 - `.workflow/AGENTS.md` 存在。
+- `docs/project.md` 存在。
 - `.workflow/intents.md` 存在。
 - `.workflow/roadmap.md` 存在。
 - `.workflow/templates/` 存在。
