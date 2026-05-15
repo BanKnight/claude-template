@@ -162,7 +162,7 @@ docs/runbooks/
 根据状态处理：
 
 - 如果缺少 `plan.md` 或 `tasks.md`，停止并提示先执行 `plan-change`。
-- 如果所有 tasks 已完成，说明无需实现，建议进入 `verify-implementation`。
+- 如果所有 tasks 已完成，说明无需实现，建议进入 `verify-change`。
 - 如果存在阻塞项，先汇报阻塞并询问是否处理阻塞。
 - 如果必要上下文缺失，停止并建议修正 `plan.md` 或补齐对应 artifact。
 
@@ -233,7 +233,7 @@ docs/runbooks/
 - 本轮完成了哪些任务。
 - 当前 tasks 进度。
 - 是否遇到阻塞。
-- 如果所有 tasks 完成，说明下一步是 `verify-implementation`。
+- 如果所有 tasks 完成，说明下一步是 `verify-change`。
 - 如果暂停，说明建议回到哪个命令或需要用户确认什么。
 
 ## 退出条件
@@ -246,7 +246,7 @@ docs/runbooks/
 - `plan.md`、`tasks.md` 和必要上下文已读取。
 - 所有 tasks 都已完成并勾选。
 - 没有未记录阻塞。
-- 下一步可以进入 `verify-implementation`。
+- 下一步可以进入 `verify-change`。
 
 ### 暂停
 

@@ -164,7 +164,7 @@ change 完成并通过 verify 后，应考虑是否有内容需要提炼到 `doc
 - `design-change`：设计方案应符合项目技术、架构、API、UI、数据、安全等基本准则。
 - `plan-change`：plan/tasks 可引用需要遵守的项目准则。
 - `implement-change`：实现时遵守项目代码、测试、安全、文档准则。
-- `verify-implementation`：可把 `docs/project.md` 作为一致性检查来源。
+- `verify-change`：可把 `docs/project.md` 作为一致性检查来源。
 - `distill-how`：change 完成后可把稳定项目认知提炼回 `docs/project.md`。
 
 ## 完成后输出
