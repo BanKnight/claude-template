@@ -123,7 +123,7 @@ src/commands/workflow/references/design-change/technology-research.md
 - `.workflow/changes/<change-id>/specs/` 是本 change 的 what 基线。
 - `docs/` 用于识别项目现有约束、长期设计、架构边界和可复用模式。
 - 根据“子域路由规则”判断子域，不要只凭子域名称泛泛填写。
-- 创建或更新某个子域 design 前，必须读取对应的 `references/design-change/<subdomain>.md`，并按其中输入检查、关注点、工作方式和输出结构完成设计。
+- 创建或更新某个子域 design 前，必须读取对应的 `references/design-change/<subdomain>.md`，并按其中输入检查、关注点、工作方式和补充检查点完成设计。
 - 涉及新技术、版本选择、新依赖或第三方服务时，必须读取 `technology-research.md` 并执行检索。
 - 已有 change design 存在时，优先更新，不要直接覆盖。
 - 读取依赖材料后再创建 design，不要凭 change-id 或文件名猜测方案。
@@ -194,7 +194,7 @@ src/commands/workflow/references/design-change/technology-research.md
 使用方式：
 
 - 先用 `overview.md` 说明本 change 选择哪些子域，以及为什么不选择其他子域。
-- 对每个被选择的子域，先读取对应 reference，再按其中输入检查、关注点、工作方式和输出结构完成设计。
+- 对每个被选择的子域，先读取对应 reference，再按其中输入检查、关注点、工作方式和补充检查点完成设计。
 - 如果子域内容不足以单独成文，写入 `overview.md`，不要创建空文件。
 - 如果发现跨子域风险，用 `risks.md` 收口。
 - 子域 design 必须能指导 `plan-change`，不能只是概念描述。
