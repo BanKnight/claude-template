@@ -1,38 +1,40 @@
-# TypeScript 决策方法
+# TypeScript 默认技术基线
 
-本 reference 用于评估 TypeScript 配置、类型检查边界、构建集成和 monorepo 组织方式。
+## 默认推荐
 
-## 判断维度
+- 默认启用 strict，并把 TypeScript 的职责定义为类型检查与声明输出，而不是替代 bundler/runtime。
+- 应用项目通常使用 `noEmit`，由 bundler/runtime 负责转译。
+- 库项目按需输出 declaration，并明确 ESM/CJS/exports 策略。
+- 按环境拆分 tsconfig：base、app、test、node/tooling、package/lib。
+- path alias 必须同时被 TypeScript、bundler、test runner、runtime 或部署环境理解。
 
-- 项目类型：库、应用、全栈项目、monorepo、多运行时项目。
-- 是否需要 emit：只类型检查（noEmit）还是由 tsc 输出声明/JS。
-- module/moduleResolution 是否匹配运行时和 bundler。
-- strictness 是否符合团队和代码成熟度。
-- path alias 是否与 bundler、runtime、test runner 一致。
-- 是否需要 project references 管理多包依赖图。
-- 类型检查与 lint/transform/bundle 的职责是否分清。
+## 职责边界
 
-## 配置问题
+- TypeScript：类型检查、类型语义、声明文件。
+- Bundler/transpiler：代码转换、bundle、tree shaking。
+- Runtime：模块解析和执行限制。
+- Lint：代码质量规则，不替代类型检查。
 
-调研 TypeScript 时，应确认：
+## 常见反模式
 
-- 当前推荐的 module/moduleResolution 组合。
-- 目标运行时对 ESM/CJS 的要求。
-- 构建工具是否负责转译，TypeScript 是否只做 typecheck。
-- 是否需要 declaration output。
-- 是否需要 incremental build 或 project references。
-- tsconfig 是否被 test runner、bundler、IDE、runtime 一致读取。
+- 用 Babel/esbuild/Oxc 转译后误以为不需要 `tsc --noEmit`。
+- 一个巨大 tsconfig 同时覆盖 app、tests、scripts、packages。
+- path alias 只配置 tsconfig，不配置运行时和测试工具。
+- monorepo 不区分 package 边界，导致类型检查慢且依赖方向混乱。
 
-## 常见误区
+## 需要官方确认的点
 
-- 用 Oxc/Babel/esbuild 转译后误以为不需要 TypeScript 类型检查。
-- path alias 只在 tsconfig 生效，但运行时或测试环境不生效。
-- monorepo 中一个巨大 tsconfig 导致类型检查慢且边界不清。
-- 不区分应用 tsconfig、库 tsconfig、测试 tsconfig。
+- 当前 TypeScript 推荐的 module/moduleResolution 组合。
+- 目标 runtime/bundler 对 ESM、CJS、bundler resolution 的要求。
+- project references、incremental、declaration 输出限制。
+- 与 eslint/typescript-eslint、test runner、framework 的兼容要求。
 
-## 输出要点
+## 何时不适用
 
-- 推荐 tsconfig 分层。
-- 是否使用 strict / noEmit / declaration / project references。
-- 与 runtime/bundler/test/lint 的职责边界。
-- monorepo 包依赖图和类型检查策略。
+- 极小脚本且类型系统成本高于收益时，可以局部不用 TS。
+- 生成代码或外部 schema 为主时，先确认类型生成链路再设计 TS 边界。
+
+## 输出落点
+
+- tsconfig 分层和类型检查策略进入 design-change 的 architecture 或 frontend 子域。
+- 具体 scripts、CI typecheck、package 输出进入 plan-change。

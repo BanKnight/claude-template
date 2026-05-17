@@ -1,67 +1,133 @@
 ---
 name: technology-research
-description: 当需要为项目选择、引入、升级或评估技术栈、框架、库、SDK、运行时、构建工具、部署平台或工程实践时使用本技能。尤其是用户提到 Bun、Cloudflare、TanStack、Oxc、TypeScript、monorepo、部署平台、工具链或“最佳实践/技术选型/当前推荐方案/是否该用某技术”时，必须使用本技能先建立调研方法和判断依据；本技能不是固定结论库，而是指导 Agent 如何检索当前资料、对比项目约束并产出可追溯技术判断。
+description: Use this skill whenever choosing, introducing, upgrading, or evaluating a technology stack, framework, library, SDK, runtime, build tool, deployment platform, or engineering practice. Trigger for questions about React, Next.js, TypeScript, Bun, Vite, TanStack, Cloudflare, monorepos, testing, package managers, dependency safety, “best practices”, “current recommendation”, or “should we use X”. Start from bundled baseline best practices for common stacks, then verify against current official docs/search results and project constraints before giving a conclusion.
 ---
 
 # technology-research
 
-使用本技能为技术选型、技术栈升级、依赖引入、工具链调整和部署平台选择建立可追溯判断。
+Use this skill to produce high-quality, traceable technology recommendations.
 
-本技能的重点不是背诵某个技术的固定最佳实践，而是让 Agent 针对当前项目、当前版本和当前约束，找到可靠资料并形成可解释结论。
+The skill is not a blank web search. It works in three steps:
 
-## 使用时机
+1. Start from a bundled baseline for the relevant technology stack.
+2. Verify that baseline against current official sources.
+3. Adjust the recommendation for the current project constraints.
 
-当出现以下任一情况时使用：
+## Core rule
 
-- 选择或评估框架、库、SDK、运行时、构建工具或部署平台。
-- 新增、替换或升级依赖。
-- 用户询问某技术是否适合当前项目。
-- design-change 涉及技术栈、版本、外部服务或工程实践。
-- 需要判断 monorepo、包管理器、构建工具、测试工具、lint/format 工具、部署平台等工程方案。
-- 用户提到 Bun、Cloudflare、TanStack、Oxc、TypeScript 等具体技术，或同类技术栈。
+Never present a baseline as final truth.
 
-## 不负责
+For common stacks, first read the matching baseline reference. Then confirm with current official docs, release notes, package metadata, security advisories, or deployment platform docs.
 
-`technology-research` 不负责：
+For library/framework/SDK/API/CLI details, use Context7 first when available. Use Tavily when broader web research, release discussion, ecosystem signals, or non-library sources are needed.
 
-- 直接实现代码。
-- 替代 `design-change` 输出完整设计文档。
-- 替代 `plan-change` 拆任务。
-- 把检索结果硬编码成永久规则。
+## When to use
 
-它产出的应该是技术判断依据，供 design/plan/implementation 使用。
+Use `technology-research` when the user or a workflow command needs to:
 
-## 工作方式
+- Choose a framework, library, SDK, runtime, package manager, build tool, testing tool, deployment platform, or engineering practice.
+- Introduce, replace, or upgrade a dependency.
+- Decide whether a technology fits the project.
+- Confirm a best practice for React, Next.js, TypeScript, Bun, Vite, TanStack, Cloudflare, monorepo, testing, lint/format, deployment, or dependency safety.
+- Support `design-change` with a current technical recommendation.
 
-1. 先明确当前问题属于哪类技术决策。
-2. 读取对应 reference，使用其中的判断清单。
-3. 查询当前官方文档、release notes、包元数据、安全公告或部署平台文档。
-4. 对照项目现状：已有技术栈、运行环境、团队约束、部署路径、性能/安全/维护要求。
-5. 输出推荐方案、取舍原因、不选方案、风险和后续验证点。
+## Not responsible for
 
-## References
+`technology-research` does not:
 
-按需读取：
+- Implement code directly.
+- Replace `design-change` as the final design artifact.
+- Replace `plan-change` as the implementation plan.
+- Freeze one global tech stack for every project.
+- Lock recommendations to hardcoded version numbers.
 
-- [methodology.md](./references/methodology.md) — 通用技术研究方法论与输出结构。
-- [dependency-safety.md](./references/dependency-safety.md) — 依赖与供应链安全检查，尤其 npm 7 天规则。
-- [monorepo.md](./references/monorepo.md) — monorepo 是否适合、如何判断边界和工具。
-- [runtime-and-tooling.md](./references/runtime-and-tooling.md) — 运行时、包管理器、构建、测试、lint/format 工具选择方法。
-- [frontend-stack.md](./references/frontend-stack.md) — 前端框架、路由、数据获取、状态管理、表格等技术判断方法。
-- [deployment-platform.md](./references/deployment-platform.md) — 部署平台、边缘运行时、serverless、环境变量、观测与回滚判断方法。
-- [typescript.md](./references/typescript.md) — TypeScript 配置、严格度、工程集成与 monorepo 判断方法。
+It produces a researched technical judgment that later workflow commands can cite.
 
-## 输出要求
+## Reference selection
 
-技术研究结论应包含：
+Read only the relevant baseline file:
 
-- 当前问题与项目约束。
-- 检索来源与检索时间。
-- 候选方案。
-- 推荐方案。
-- 不推荐方案及原因。
-- 版本/配置/部署/供应链风险。
-- 需要验证的假设。
-- 后续应写入哪个 design 或 plan artifact。
+- [default-web-stack.md](./references/default-web-stack.md) — User-preferred default Web app stack: Bun local dev, Cloudflare deploy, TanStack, shadcn/ui, Jotai, Better Auth, React 19, Tailwind CSS, Drizzle ORM, D1, Vite, and Oxc.
+- [react.md](./references/react.md) — React app/component baseline.
+- [nextjs.md](./references/nextjs.md) — Next.js app baseline.
+- [typescript.md](./references/typescript.md) — TypeScript configuration and typecheck baseline.
+- [bun-vite.md](./references/bun-vite.md) — Bun, Vite, runtime/tooling baseline.
+- [tanstack.md](./references/tanstack.md) — TanStack Router/Query/Table/Form baseline.
+- [cloudflare.md](./references/cloudflare.md) — Cloudflare Workers/Pages/D1/KV/R2 baseline.
+- [monorepo.md](./references/monorepo.md) — Monorepo and workspace baseline.
+- [testing.md](./references/testing.md) — Test strategy baseline.
 
-如果资料不足，不要伪装成结论；记录缺口并说明还需要查什么或需要用户确认什么。
+## Workflow
+
+1. Identify the decision type: stack selection, library introduction, upgrade, configuration, deployment, testing, security, performance, or maintainability.
+2. Inspect project context when relevant: existing stack, package manager, deploy target, runtime, build/test/lint scripts, `docs/project.md`, roadmap/change context.
+3. Read the matching baseline reference.
+4. Verify current facts:
+   - Use Context7 for official library/framework/SDK/API/CLI docs.
+   - Use Tavily for current ecosystem signals, platform docs not covered by Context7, release notes, security advisories, or comparisons.
+   - For npm dependencies, check package metadata, release timing, maintenance state, security advisories, and dependency-tree impact.
+5. Compare baseline against project constraints.
+6. Output a recommendation that distinguishes baseline, verified current facts, and project-specific adjustments.
+
+## Dependency and supply-chain checks
+
+When adding, replacing, or upgrading dependencies, check:
+
+- Current stable version.
+- Target version release date.
+- Whether recent releases are unusually frequent.
+- Maintainer changes, package-name confusion, repository moves, or security advisories.
+- Whether the dependency tree grows significantly.
+- Whether the project already has an adequate dependency.
+- Whether platform capabilities or small project-local code can avoid the new dependency.
+
+Default rule: do not choose an npm version published less than 7 days ago unless the user explicitly confirms.
+
+If using a version published less than 7 days ago, record:
+
+- User confirmation.
+- Why waiting is not acceptable.
+- Risk reduction measures.
+- Rollback plan.
+
+If a dependency only saves a small amount of code but adds supply-chain, bundle size, maintenance, or security risk, default to not adding it.
+
+## Conclusion rules
+
+- If the baseline and current sources agree, recommend the baseline and say it was confirmed.
+- If current sources overturn the baseline, trust current sources and explain the change.
+- If project constraints make the baseline unsuitable, clearly explain the deviation.
+- If sources are missing or contradictory, record the gap and do not pretend the baseline is verified.
+
+## Output format
+
+Use this structure:
+
+```markdown
+## 技术问题
+
+## 项目约束
+
+## 默认基线
+
+## 当前资料确认
+
+## 推荐方案
+
+## 不采用的方案
+
+## 风险与验证点
+
+## 后续落点
+```
+
+Required details:
+
+- What baseline reference was used.
+- What official/current sources were checked and when.
+- Whether the baseline still holds.
+- Any project-specific reason to deviate from the baseline.
+- Dependency safety notes when adding or upgrading packages.
+- Where the conclusion should land: `design-change`, `plan-change`, implementation notes, or long-term docs.
+
+If current sources are missing or contradictory, say so. Do not pretend the baseline is verified.
