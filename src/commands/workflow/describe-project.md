@@ -165,7 +165,7 @@ change 完成并通过 verify 后，应考虑是否有内容需要提炼到 `doc
 - `plan-change`：plan/tasks 可引用需要遵守的项目准则。
 - `implement-change`：实现时遵守项目代码、测试、安全、文档准则。
 - `verify-change`：可把 `docs/project.md` 作为一致性检查来源。
-- `distill-how`：change 完成后可把稳定项目认知提炼回 `docs/project.md`。
+- `distill-change`：change 完成后可把稳定项目认知提炼回 `docs/project.md`。
 
 ## 完成后输出
 

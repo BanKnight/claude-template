@@ -214,7 +214,7 @@ change 的质量标准：
 setup-workflow
 clarify-intent
 plan-roadmap
-sync-contract
+distill-change
 ```
 
 ## change 骨架

@@ -12,7 +12,7 @@
 
 `design-change` 只回答：为了实现这个 change，应采用怎样的设计方案、边界、取舍和风险控制。
 
-本命令不把设计结论直接写入 `docs/`。长期 design、architecture、ADR 等沉淀由后续 `distill-how` 在验证后完成。
+本命令不把设计结论直接写入 `docs/`。长期 design、architecture、ADR 等沉淀由后续 `distill-change` 在验证后完成。
 
 ## 参考资料
 
@@ -69,7 +69,7 @@ reference 不定义最终文件结构；但可以在不破坏模板基础结构�
 
 - 为什么不需要更多设计子域。
 - 可以直接进入 `plan-change` 的依据。
-- 是否存在后续 `distill-how` 候选。
+- 是否存在后续 `distill-change` 候选。
 
 ## change 参数
 
@@ -264,7 +264,7 @@ AI 的内置知识可能过期。涉及技术栈、框架、库、SDK、运行�
 11. 设计必须说明关键决策、权衡、风险和开放问题。
 12. 涉及技术版本或依赖时，设计必须记录检索来源、检索时间、版本选择依据和供应链风险判断。
 13. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
-14. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
+14. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-change` 提炼的内容。
 15. 创建后验证文件存在，再汇报进度。
 
 ## 与长期沉淀的关系
@@ -287,9 +287,9 @@ docs/architecture/adr/
 
 - change 设计在实现和验证前仍可能变化。
 - 长期 HOW 应基于已实现且已验证的结果沉淀。
-- `distill-how` 会在 verify 之后，从本 change 的 design、实现结果和验证证据中提炼长期内容。
+- `distill-change` 会在 verify 之后，从本 change 的 design、实现结果和验证证据中提炼长期内容。
 
-因此，design 文件中可以记录“后续沉淀候选”，但不能代替 `distill-how`。
+因此，design 文件中可以记录“后续沉淀候选”，但不能代替 `distill-change`。
 
 ## design 写入格式
 
@@ -336,7 +336,7 @@ docs/architecture/adr/
 - 当前阶段已完成：`design-change`。
 - 如果涉及技术版本或依赖选择，说明检索了哪些资料、采用哪个版本/方案、是否满足 npm 7 天规则。
 - 解锁的下一步：`plan-change`。
-- 哪些内容可能在 `distill-how` 阶段沉淀到长期 docs。
+- 哪些内容可能在 `distill-change` 阶段沉淀到长期 docs。
 - 如果仍有阻塞，说明阻塞原因。
 
 ## 退出条件

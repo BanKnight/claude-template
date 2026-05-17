@@ -37,7 +37,7 @@
 
 - `implement-change` 已完成一个或多个任务。
 - 用户要求确认实现是否完成、是否能收口、是否能归档。
-- change 准备进入 `distill-how` 或 `archive-change`。
+- change 准备进入 `distill-change` 或 `archive-version`。
 - 实现过程出现偏离 specs/design 的风险，需要质量对齐。
 - 用户要求跑测试、做 e2e、检查一致性或验收。
 
@@ -281,7 +281,7 @@ CRITICAL → WARNING → SUGGESTION
 - `verify.md` 创建或更新位置。
 - 当前结论：通过 / 条件通过 / 不通过 / 证据不足。
 - 如不通过，建议回到哪个命令。
-- 如通过，解锁下一步：`distill-how`。
+- 如通过，解锁下一步：`distill-change`。
 
 ## 退出条件
 
@@ -295,4 +295,4 @@ CRITICAL → WARNING → SUGGESTION
 - `verify.md` 已创建或更新。
 - 最终结论明确。
 - 如果存在 CRITICAL，明确不能进入 distill/archive。
-- 如果无 CRITICAL，说明是否可以进入 `distill-how`。
+- 如果无 CRITICAL，说明是否可以进入 `distill-change`。
