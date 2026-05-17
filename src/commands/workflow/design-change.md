@@ -41,6 +41,16 @@
 
 在本工作流中，`design/` 目录视为一个阶段 artifact；一次 `design-change` 可以创建本 change 需要的多个 design 子域文件，但不能创建无关子域文件，也不能继续推进后续阶段。
 
+## 模板与 reference 职责边界
+
+`design-change` 的输出结构由命令本体和 `.workflow/templates/changes/design/` 共同约束：
+
+- 命令本体负责：输出位置、子域命名、子域路由、最低质量门槛和完成条件。
+- 模板负责：每类 design 子域的基础骨架和必要字段。
+- reference 负责：提升专业质量，补充检查点、常见误区、判断方法和可扩展内容。
+
+reference 不定义最终文件结构；但可以在不破坏模板基础结构的前提下，指导 Agent 增补必要内容。
+
 ## design 创建条件
 
 `design-change` 不要求每个 change 都创建完整 design 子域。
@@ -161,21 +171,41 @@ src/commands/workflow/references/design-change/technology-research.md
 
 ## 子域路由规则
 
-`design-change` 按子域拆分 design 文件，但只创建本 change 需要的设计文件。子域不是固定清单式填空，而是帮助 Agent 使用对应专业视角完成 how 设计。
+`design-change` 按子域拆分 design，但只创建本 change 需要的设计产物。子域不是固定清单式填空，而是帮助 Agent 使用对应专业视角完成 how 设计。
+
+默认情况下，一个子域对应一个同名 Markdown 文件：
+
+```text
+.workflow/changes/<change-id>/design/<subdomain>.md
+```
+
+如果某个子域足够复杂，单文件会导致内容过长、结构混乱或需要多个独立材料，可以使用同名子文件夹代替：
+
+```text
+.workflow/changes/<change-id>/design/<subdomain>/
+├── overview.md
+└── <topic>.md
+```
+
+使用子文件夹时：
+
+- `<subdomain>/overview.md` 必须说明该子域的文件索引和阅读顺序。
+- 子文件夹内文件必须仍遵循该子域模板的基础要求。
+- 不要为了显得完整而拆目录；只有复杂度需要时才拆。
 
 常见子域：
 
-| 子域 | 触发场景 | 输出文件 | 专业 reference |
+| 子域 | 触发场景 | 默认输出 | 专业 reference |
 |---|---|---|---|
 | overview | 所有非平凡 change，用于汇总上下文、设计范围和子域索引 | `overview.md` | 无，直接使用 overview 模板 |
-| product | 产品目标、能力边界、用户流程或信息架构不清晰 | `product.md` | `product.md` |
-| ui-ux | 页面结构、交互模式、页面状态或可用性需要明确 | `ui-ux.md` | `ui-ux.md` |
-| frontend | 前端模块、组件、状态管理、路由或工程约束需要明确 | `frontend.md` | `frontend.md` |
-| architecture | 跨模块、技术选型、系统边界、依赖关系或演进策略需要明确 | `architecture.md` | `architecture.md` |
-| api | 接口、协议、请求响应、鉴权或兼容性需要明确 | `api.md` | `api.md` |
-| data | 数据模型、迁移、索引、一致性或查询写入路径需要明确 | `data.md` | `data.md` |
-| business-rules | 业务规则、状态机、计算规则或边界情况需要明确 | `business-rules.md` | `business-rules.md` |
-| error-handling | 失败路径、错误码、重试、降级、补偿或恢复策略需要明确 | `error-handling.md` | `error-handling.md` |
+| product | 产品目标、能力边界、用户流程或信息架构不清晰 | `product.md` 或 `product/` | `product.md` |
+| ui-ux | 页面结构、交互模式、页面状态或可用性需要明确 | `ui-ux.md` 或 `ui-ux/` | `ui-ux.md` |
+| frontend | 前端模块、组件、状态管理、路由或工程约束需要明确 | `frontend.md` 或 `frontend/` | `frontend.md` |
+| architecture | 跨模块、技术选型、系统边界、依赖关系或演进策略需要明确 | `architecture.md` 或 `architecture/` | `architecture.md` |
+| api | 接口、协议、请求响应、鉴权或兼容性需要明确 | `api.md` 或 `api/` | `api.md` |
+| data | 数据模型、迁移、索引、一致性或查询写入路径需要明确 | `data.md` 或 `data/` | `data.md` |
+| business-rules | 业务规则、状态机、计算规则或边界情况需要明确 | `business-rules.md` 或 `business-rules/` | `business-rules.md` |
+| error-handling | 失败路径、错误码、重试、降级、补偿或恢复策略需要明确 | `error-handling.md` 或 `error-handling/` | `error-handling.md` |
 | risks | 跨子域风险、权衡、开放问题集中收口 | `risks.md` | 无，汇总其他子域风险 |
 
 路由原则：
@@ -220,18 +250,20 @@ AI 的内置知识可能过期。涉及技术栈、框架、库、SDK、运行�
 5. 根据子域路由规则判断本 change 需要哪些设计子域。
 6. 对每个被选择的子域，读取 `references/design-change/<subdomain>.md`。
 7. 如果涉及技术栈、版本、依赖或外部服务，读取 `technology-research.md` 并完成检索。
-8. 创建或更新：
+8. 创建或更新对应子域 design。默认使用单文件；复杂子域可以使用同名文件夹：
 
 ```text
 .workflow/changes/<change-id>/design/<subdomain>.md
+.workflow/changes/<change-id>/design/<subdomain>/overview.md
 ```
 
-9. 使用 `.workflow/templates/changes/design/` 下对应模板作为结构基础。
-10. 设计必须说明关键决策、权衡、风险和开放问题。
-11. 涉及技术版本或依赖时，设计必须记录检索来源、检索时间、版本选择依据和供应链风险判断。
-12. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
-13. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
-14. 创建后验证文件存在，再汇报进度。
+9. 使用 `.workflow/templates/changes/design/` 下对应模板作为基础骨架。
+10. reference 只作为补充质量检查，不改变模板规定的基础结构。
+11. 设计必须说明关键决策、权衡、风险和开放问题。
+12. 涉及技术版本或依赖时，设计必须记录检索来源、检索时间、版本选择依据和供应链风险判断。
+13. 设计必须能指导 `plan-change`，但不要直接拆 tasks。
+14. 不把长期沉淀写入 `docs/`；只在设计中标记后续可由 `distill-how` 提炼的内容。
+15. 创建后验证文件存在，再汇报进度。
 
 ## 与长期沉淀的关系
 
@@ -265,11 +297,14 @@ docs/architecture/adr/
 .workflow/templates/changes/design/<subdomain>.md
 ```
 
-输出路径：
+输出路径可以是单文件，也可以是复杂子域的同名文件夹：
 
 ```text
 .workflow/changes/<change-id>/design/<subdomain>.md
+.workflow/changes/<change-id>/design/<subdomain>/overview.md
 ```
+
+单文件使用对应模板；同名文件夹的 `overview.md` 必须说明文件索引和阅读顺序。
 
 每个 design 文件至少应说明：
 
