@@ -26,7 +26,8 @@
 - [data.md](./references/design-change/data.md) — 数据模型、表结构、字段、关系、索引与迁移。
 - [business-rules.md](./references/design-change/business-rules.md) — 业务概念、业务规则、状态流转、计算规则与约束。
 - [error-handling.md](./references/design-change/error-handling.md) — 异常场景、错误码、失败处理、重试、降级与边界情况。
-- [technology-research.md](./references/design-change/technology-research.md) — 技术版本、依赖选择与供应链安全检索规则。
+
+涉及技术栈、框架、库、SDK、运行时、构建工具、部署平台或依赖选择时，调用 `technology-research` skill；不要在 `design-change` 内维护固定技术结论。
 
 ## 阶段推进原则
 
@@ -124,7 +125,7 @@ docs/architecture/
 docs/runbooks/
 .workflow/changes/<change-id>/design/
 src/commands/workflow/references/design-change/<subdomain>.md
-src/commands/workflow/references/design-change/technology-research.md
+src/skills/technology-research/SKILL.md
 ```
 
 读取规则：
@@ -134,7 +135,7 @@ src/commands/workflow/references/design-change/technology-research.md
 - `docs/` 用于识别项目现有约束、长期设计、架构边界和可复用模式。
 - 根据“子域路由规则”判断子域，不要只凭子域名称泛泛填写。
 - 创建或更新某个子域 design 前，必须读取对应的 `references/design-change/<subdomain>.md`，并按其中输入检查、关注点、工作方式和补充检查点完成设计。
-- 涉及新技术、版本选择、新依赖或第三方服务时，必须读取 `technology-research.md` 并执行检索。
+- 涉及新技术、版本选择、新依赖或第三方服务时，必须调用 `technology-research` skill，用其方法论和 references 完成当前资料检索、项目约束对照和风险判断。
 - 已有 change design 存在时，优先更新，不要直接覆盖。
 - 读取依赖材料后再创建 design，不要凭 change-id 或文件名猜测方案。
 
@@ -233,11 +234,12 @@ src/commands/workflow/references/design-change/technology-research.md
 
 AI 的内置知识可能过期。涉及技术栈、框架、库、SDK、运行时、构建工具、外部服务或包版本时，必须按以下规则处理：
 
-1. 读取 `src/commands/workflow/references/design-change/technology-research.md`。
-2. 搜索当前官方文档、release notes、包元数据或安全公告。
-3. 核对项目现有技术栈和兼容性。
-4. 在 design 中记录采用的版本/方案、检索来源、检索时间和取舍原因。
-5. 对 npm 依赖执行供应链安全检查：默认不选发布不足 7 天的版本，除非用户明确确认。
+1. 调用 `technology-research` skill。
+2. 按该 skill 的 references 识别当前问题属于运行时、工具链、前端栈、部署平台、TypeScript、monorepo 或依赖安全等哪类技术决策。
+3. 搜索当前官方文档、release notes、包元数据、安全公告或部署平台文档。
+4. 核对项目现有技术栈和兼容性。
+5. 在 design 中记录采用的版本/方案、检索来源、检索时间和取舍原因。
+6. 对 npm 依赖执行供应链安全检查：默认不选发布不足 7 天的版本，除非用户明确确认。
 
 不要只凭模型记忆决定技术版本或新增依赖。
 
@@ -249,7 +251,7 @@ AI 的内置知识可能过期。涉及技术栈、框架、库、SDK、运行�
 4. 按需读取 `docs/` 中相关长期上下文。
 5. 根据子域路由规则判断本 change 需要哪些设计子域。
 6. 对每个被选择的子域，读取 `references/design-change/<subdomain>.md`。
-7. 如果涉及技术栈、版本、依赖或外部服务，读取 `technology-research.md` 并完成检索。
+7. 如果涉及技术栈、版本、依赖或外部服务，调用 `technology-research` skill，并将其技术判断、检索来源和风险结论写入对应 design 子域。
 8. 创建或更新对应子域 design。默认使用单文件；复杂子域可以使用同名文件夹：
 
 ```text
