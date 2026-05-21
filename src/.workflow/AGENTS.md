@@ -58,9 +58,8 @@
 - `specify-change` 只更新 `.workflow/changes/<change-id>/specs/`，用于明确 what。
 - `design-change` 只更新 `.workflow/changes/<change-id>/design/`，用于明确 how。
 - `plan-change` 补齐 `.workflow/changes/<change-id>/plan.md` 与 `tasks.md`，其中 `plan.md` 必须提供实现上下文和长期 docs 引用。
-- `implement-task`、`verify-implementation` 分别补齐实现状态与 verify 证据。
-- `sync-contract` 才能把 change specs 回写到 `docs/specs/`。
-- `distill-how` 才能把已验证的 design/implementation 经验沉淀到 `docs/design/` 与 `docs/architecture/`。
+- `implement-change`、`verify-change` 分别补齐实现状态与 verify 证据。
+- `distill-change` 才能把已验证的 change specs、design、implementation 经验沉淀到 `docs/specs/`、`docs/design/` 与 `docs/architecture/`。
 - `archive-version` 以 version 为单位归档，归档后从活跃 roadmap 移入 archive。
 
 ## 禁止事项

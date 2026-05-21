@@ -9,7 +9,7 @@
 - `docs/project.md` 是项目认知入口，不是按需附加材料；即使后续只处理局部任务，也应先理解项目整体定位、领域概念与长期准则。
 - 长期 WHAT 放入 `docs/specs/`；长期 design 放入 `docs/design/`；系统级 HOW、架构边界、ADR 放入 `docs/architecture/`；操作手册放入 `docs/runbooks/`。
 - 运行态意图、活跃 roadmap、单次 change 过程、任务执行状态和 verify 证据不要放在 `docs/`，应放在 `.workflow/`。
-- `docs/` 不直接接收未验证的 change design；长期沉淀应由 `sync-contract` 或 `distill-how` 在验证后完成。
+- `docs/` 不直接接收未验证的 change design；长期沉淀应由 `distill-change` 在验证后完成。
 
 ## 建议结构
 
@@ -37,13 +37,13 @@ docs/
 ### `docs/specs/`
 
 - 保存长期 WHAT，即系统能力的主线行为契约。
-- 由 `sync-contract` 从 `.workflow/changes/<change-id>/specs/` 回写。
+- 由 `distill-change` 从 `.workflow/changes/<change-id>/specs/` 回写。
 - 不存放实现方案、任务拆解或临时 change 过程。
 
 ### `docs/design/`
 
 - 保存长期 design 内容，即从已验证 change design 中提炼出的可复用设计结论。
-- 由 `distill-how` 从 change design、实现结果和 verify 证据中提炼。
+- 由 `distill-change` 从 change design、实现结果和 verify 证据中提炼。
 - 不直接复制未验证的 `.workflow/changes/<change-id>/design/`。
 
 ### `docs/architecture/`
@@ -92,7 +92,7 @@ docs/
 
 - `.workflow/` 负责运行态：intents、roadmap、changes、tasks、verify、archive。
 - `docs/` 负责长期态：project big picture、主线 spec、长期 design、architecture、runbooks。
-- 从 `.workflow/` 进入 `docs/` 的内容必须经过对应命令：`sync-contract`、`distill-how` 或 `describe-project`。
+- 从 `.workflow/` 进入 `docs/` 的内容必须经过对应命令：`distill-change` 或 `describe-project`。
 - 归档材料保留在 `.workflow/archive/`，不要为了历史追溯把完整 archive 复制到 `docs/`。
 
 ## 禁止事项
