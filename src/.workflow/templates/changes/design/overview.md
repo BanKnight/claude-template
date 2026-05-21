@@ -51,6 +51,6 @@
 
 ## 后续沉淀候选
 
-<!-- 仅记录候选；长期沉淀由 distill-how 在 verify 之后完成。 -->
+<!-- 仅记录候选；长期沉淀由 distill-change 在 verify 之后完成。 -->
 
 - （待补充）

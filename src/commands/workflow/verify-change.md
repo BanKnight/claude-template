@@ -129,7 +129,7 @@ git diff / git status
 根据状态处理：
 
 - 如果 specs 缺失，停止并提示先执行 `specify-change`。
-- 如果 tasks 缺失，停止并提示先执行 `plan-change`。
+- 如果 plan.md 或 tasks.md 缺失，停止并提示先执行 `plan-change`。
 - 如果没有实现结果，说明只能做预验证，不能给出最终通过结论。
 - 如果 verify.md 已存在，读取后追加或更新本次验证轮次，不要直接覆盖历史结论。
 

@@ -211,7 +211,7 @@ docs/runbooks/
 - 当前任务。
 - 已完成哪些工作。
 - 阻塞原因。
-- 建议回到哪个命令修正：`specify-change`、`design-change` 或 `plan-change`。
+- 建议回到哪个命令修正：`verify-change`、`specify-change`、`design-change` 或 `plan-change`。
 
 ## 任务完成规则
 
