@@ -87,9 +87,13 @@ docs/
    - 删除、暂缓或放弃不再需要的 roadmap 条目。
 5. 为新增或变更的 change 建立/更新骨架，骨架模板来自 `.workflow/templates/changes/intents.md`：
    - `.workflow/changes/<change-id>/intents.md`
-6. 保证 `.workflow/roadmap.md` 中每个活跃 change 都对应 `.workflow/changes/<change-id>/`。
-7. 从 `.workflow/intents.md` 的“待分配”中移除已经处理的意图。
-8. 不读取全部 archive；归档内容只按需读取。
+6. 写入 roadmap 时，必须为每个 version/change 明确以下字段：
+   - version：状态、目标、范围。
+   - change：change-id、状态、来源、来源意图或规划原因、路径、下一步。
+7. 保证 `.workflow/roadmap.md` 中每个活跃 change 都对应到 `.workflow/changes/<change-id>/`。
+8. 从 `.workflow/intents.md` 的“待分配”中移除已经处理的意图；进入 roadmap 的写入对应 change 的来源意图，暂缓或放弃的写入 roadmap 的“暂缓 / 放弃”。
+9. 更新 `.workflow/roadmap.md` 的“当前焦点”和“下一步”。
+10. 不读取全部 archive；归档内容只按需读取。
 
 ## Agent 主动规划规则
 
@@ -217,6 +221,46 @@ plan-roadmap
 distill-change
 ```
 
+## roadmap 字段规则
+
+`plan-roadmap` 写入 `.workflow/roadmap.md` 时，必须使用 `.workflow/templates/roadmap.md` 的结构。
+
+### Version 字段
+
+每个活跃 version 至少包含：
+
+- version 名称。
+- 状态：规划中 / 进行中 / 待归档。
+- 目标：本 version 要达成的阶段性结果。
+- 范围：明确做什么、不做什么。
+- changes：本 version 下的 change 清单。
+
+### Change 字段
+
+每个活跃 change 至少包含：
+
+- change-id。
+- 状态。
+- 来源：用户意图 / 主动规划。
+- 来源意图：如果来自 `.workflow/intents.md`，保留编号和原始意图。
+- 规划原因：说明这个 change 为什么应该存在。
+- 路径：`.workflow/changes/<change-id>/`。
+- 下一步：指向下一个 workflow 命令。
+
+### Change 状态到下一步命令
+
+| Change 状态 | 下一步命令 |
+|---|---|
+| 待创建 | plan-roadmap |
+| 待规格 | specify-change |
+| 待设计 | design-change |
+| 待计划 | plan-change |
+| 待实现 | implement-change |
+| 待验证 | verify-change |
+| 待沉淀 | distill-change |
+| 已完成 | archive-version |
+| 阻塞 | 先处理阻塞项 |
+
 ## change 骨架
 
 新增 change 时，至少创建：
@@ -248,7 +292,15 @@ distill-change
 
 `.workflow/roadmap.md` 只记录活跃 versions/changes。
 
-`.workflow/intents.md` 只保留尚未进入 roadmap 的意图。已经进入 roadmap、暂缓或放弃的意图，应从 `intents.md` 移出，并在 `roadmap.md` 中体现结果。
+写入规则：
+
+- 使用 `.workflow/templates/roadmap.md` 的字段结构。
+- 进入活跃 roadmap 的意图，必须从 `.workflow/intents.md` 移出。
+- 进入 roadmap 的用户意图，必须写入对应 change 的“来源意图”。
+- 暂缓或放弃的意图，也必须从 `.workflow/intents.md` 移出，并写入 roadmap 的“暂缓 / 放弃”。
+- 主动规划出的 change，必须写明“来源：主动规划”和“规划原因”。
+- 每个活跃 change 必须有明确状态和下一步命令。
+- 当前最应推进的 version/change 必须同步写入“当前焦点”和“下一步”。
 
 ## 与 archive 的关系
 
