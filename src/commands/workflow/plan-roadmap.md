@@ -2,7 +2,7 @@
 
 ## 定位
 
-`plan-roadmap` 用于把 `.workflow/intents.md` 中“未分配”的用户原始意图，编排进当前开发路线图 `.workflow/roadmap.md`。
+`plan-roadmap` 用于把 `.workflow/intents.md` 中“待分配”的用户原始意图，编排进当前开发路线图 `.workflow/roadmap.md`。
 
 `roadmap.md` 是当前活跃 versions 和 changes 的索引：
 
@@ -25,7 +25,7 @@
 
 当满足以下情况时，AI 可以主动进入 `plan-roadmap`：
 
-- `.workflow/intents.md` 中存在“未分配”意图。
+- `.workflow/intents.md` 中存在“待分配”意图。
 - 用户确认某个意图已经足够清楚，可以安排进入路线图。
 - 用户询问“下一步做什么”“如何排期”“这些需求怎么安排”。
 - roadmap 与 `.workflow/changes/` 之间可能不一致，需要重排、插入、更新或删除。
@@ -57,8 +57,8 @@ docs/
 
 读取规则：
 
-- 读取 `.workflow/intents.md` 时，优先从“未分配”底部往上读。
-- 先处理最近追加的未分配意图。
+- 读取 `.workflow/intents.md` 时，优先从“待分配”底部往上读。
+- 先处理最近追加的待分配意图。
 - `.workflow/roadmap.md` 是主要写入目标，只记录活跃 versions/changes。
 - `.workflow/archive/roadmap.md` 和 `.workflow/archive/changes/` 只在需要历史追溯、避免重复规划或理解已完成版本时按需读取。
 
@@ -76,10 +76,10 @@ docs/
 
 ## 执行规则
 
-1. 从 `.workflow/intents.md` 的“未分配”底部往上读取。
+1. 从 `.workflow/intents.md` 的“待分配”底部往上读取。
 2. 跳过“待讨论”的意图；必要时建议回到 `clarify-intent`。
 3. 结合 `docs/`、`.workflow/changes/`、`.workflow/archive/` 和现有 `roadmap.md` 判断 big picture。
-4. 对未分配意图进行 roadmap 编排：
+4. 对待分配意图进行 roadmap 编排：
    - 新建 version。
    - 重排 version 顺序。
    - 插入 change。
@@ -88,7 +88,7 @@ docs/
 5. 为新增或变更的 change 建立/更新骨架，骨架模板来自 `.workflow/templates/changes/intents.md`：
    - `.workflow/changes/<change-id>/intents.md`
 6. 保证 `.workflow/roadmap.md` 中每个活跃 change 都对应 `.workflow/changes/<change-id>/`。
-7. 从 `.workflow/intents.md` 的“未分配”中移除已经处理的意图。
+7. 从 `.workflow/intents.md` 的“待分配”中移除已经处理的意图。
 8. 不读取全部 archive；归档内容只按需读取。
 
 ## Agent 主动规划规则
@@ -278,4 +278,4 @@ distill-change
 - `.workflow/roadmap.md` 有明确当前焦点和下一步。
 - roadmap 中每个活跃 change 都能对应到 `.workflow/changes/<change-id>/`。
 - 新增或更新的 change 至少包含 `intents.md` 骨架。
-- `.workflow/intents.md` 只保留仍待讨论或未分配的意图。
+- `.workflow/intents.md` 只保留仍待讨论或待分配的意图。
