@@ -24,10 +24,11 @@
 
 <!-- WORKFLOW:GOVERNANCE:START -->
 ## 治理文档导入
-- @docs/GOVERNANCE.md
-- @.workflow/GOVERNANCE.md
+
+- @.workflow/AGENTS.md
+- @docs/AGENTS.md
 
 必须读取并遵循：
-1) .workflow/GOVERNANCE.md 负责运行态/流程态治理。
-2) docs/GOVERNANCE.md 负责长期文档态治理。
+1. `.workflow/AGENTS.md` 负责运行态、流程态与变更工作区治理。
+2. `docs/AGENTS.md` 负责长期文档、索引与沉淀治理。
 <!-- WORKFLOW:GOVERNANCE:END -->
