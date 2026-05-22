@@ -53,7 +53,7 @@
 ## 阶段产物规则
 
 - `describe-project` 可在任意阶段更新 `docs/project.md`，用于补全项目认知 big picture。
-- `clarify-intent` 只更新 `.workflow/intents.md`。
+- `clarify-intents` 只更新 `.workflow/intents.md`。
 - `plan-roadmap` 更新 `.workflow/roadmap.md`，建立或更新 `.workflow/changes/<change-id>/intents.md`，并从 `.workflow/intents.md` 移出已分配意图。
 - `specify-change` 只更新 `.workflow/changes/<change-id>/specs/`，用于明确 what。
 - `design-change` 只更新 `.workflow/changes/<change-id>/design/`，用于明确 how。

@@ -93,7 +93,7 @@ src/          # 工作流命令与模板源
 |---|---|
 | 初始化或修复 `.workflow/` / `docs/` 结构 | `setup-workflow` |
 | 介绍或补充项目整体认知 | `describe-project` |
-| 想法还模糊，需要聊清楚 | `clarify-intent` |
+| 想法还模糊，需要聊清楚 | `clarify-intents` |
 | 已有原始意图，需要安排进开发路线图 | `plan-roadmap` |
 | 某个 change 需要写清楚 what / 行为契约 | `specify-change` |
 | 某个 change 需要设计 how / 架构 / UI / API / 数据等 | `design-change` |

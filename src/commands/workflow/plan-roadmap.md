@@ -77,7 +77,7 @@ docs/
 ## 执行规则
 
 1. 从 `.workflow/intents.md` 的“待分配”底部往上读取。
-2. 跳过“待讨论”的意图；必要时建议回到 `clarify-intent`。
+2. 跳过“待讨论”的意图；必要时建议回到 `clarify-intents`。
 3. 结合 `docs/`、`.workflow/changes/`、`.workflow/archive/` 和现有 `roadmap.md` 判断 big picture。
 4. 对待分配意图进行 roadmap 编排：
    - 新建 version。
@@ -216,7 +216,7 @@ change 的质量标准：
 
 ```text
 setup-workflow
-clarify-intent
+clarify-intents
 plan-roadmap
 distill-change
 ```

@@ -158,7 +158,7 @@ change 完成并通过 verify 后，应考虑是否有内容需要提炼到 `doc
 
 后续命令都可以把 `docs/project.md` 作为项目认知来源：
 
-- `clarify-intent`：判断用户意图是否与项目定位或领域概念冲突。
+- `clarify-intents`：判断用户意图是否与项目定位或领域概念冲突。
 - `plan-roadmap`：规划 version/change 时理解项目方向和长期约束。
 - `specify-change`：避免 spec 与项目基本认知冲突。
 - `design-change`：设计方案应符合项目技术、架构、API、UI、数据、安全等基本准则。

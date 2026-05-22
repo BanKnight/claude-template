@@ -1,8 +1,8 @@
-# clarify-intent 命令
+# clarify-intents 命令
 
 ## 定位
 
-`clarify-intent` 用于通过追问，把用户的粗糙想法、模糊需求或口述内容记录到 `.workflow/intents.md` 的待处理意图池。
+`clarify-intents` 用于通过追问，把用户的粗糙想法、模糊需求或口述内容记录到 `.workflow/intents.md` 的待处理意图池。
 
 `intents.md` 只保存尚未进入 roadmap 的意图：
 
@@ -13,7 +13,7 @@ big picture 不从 `intents.md` 获取。需要理解项目全局状态时，AI 
 
 ## 主动触发
 
-当用户提出模糊需求、粗糙想法、方向不清的问题，或表达“聊清楚 / 澄清一下 / 整理想法 / 帮我问清楚 / grill 一下”时，AI 可以主动进入 `clarify-intent`。
+当用户提出模糊需求、粗糙想法、方向不清的问题，或表达“聊清楚 / 澄清一下 / 整理想法 / 帮我问清楚 / grill 一下”时，AI 可以主动进入 `clarify-intents`。
 
 不要在以下情况强行进入：
 
@@ -47,7 +47,7 @@ docs/
 
 ## 不负责
 
-`clarify-intent` 不负责：
+`clarify-intents` 不负责：
 
 - 设计方案。
 - 规划 roadmap。
@@ -105,7 +105,7 @@ docs/
 
 ## 退出条件
 
-当满足以下条件时，`clarify-intent` 可以结束：
+当满足以下条件时，`clarify-intents` 可以结束：
 
 - 用户原始意图已经记录。
 - 该意图位于“待讨论”或“待分配”。
