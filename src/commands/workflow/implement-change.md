@@ -67,37 +67,23 @@
 .workflow/changes/<change-id>/tasks.md
 ```
 
-必须根据 `plan.md` 继续读取其中列出的必要上下文：
+按 `plan.md` 和 `tasks.md` 的上下文清单读取必要文件：
 
 ```text
 .workflow/changes/<change-id>/intents.md
 .workflow/changes/<change-id>/specs/
 .workflow/changes/<change-id>/design/
+docs/...
+代码文件或目录
 ```
-
-必须按需定位并读取 `docs/` 中与本次实现相关的长期文档，以保证实现上下文齐全。常见来源包括但不限于：
-
-```text
-docs/specs/
-docs/design/
-docs/architecture/
-docs/runbooks/
-```
-
-按需读取规则：
-
-- 优先读取 `plan.md` 明确列出的 docs 路径。
-- 如果 `tasks.md`、spec 或 design 引用了 docs 路径，执行对应任务前必须读取。
-- 如果 plan 没有列出但实现明显涉及某个 capability、架构边界、长期设计、运行手册、调研结论或其他长期约束，应搜索整个 `docs/` 并读取相关文档。
-- 不要全量读取 `docs/`；只读取与当前 change、当前任务或风险判断相关的文档。
-- 如果找不到必要长期文档，说明缺失，并判断是继续实现、暂停请求用户确认，还是建议补齐计划或长期文档。
 
 读取规则：
 
 - `plan.md` 是实现上下文入口，不要绕过 plan 直接看 tasks 做事。
 - `tasks.md` 是执行队列和进度来源。
-- 必须读取 plan 中列出的具体运行态上下文和 docs 路径；如果路径缺失或不可读，先暂停并指出 plan 需要修正。
+- 只读取 `plan.md` / `tasks.md` 明确列出的运行态上下文、长期 docs 和代码区域。
 - 如果 tasks 引用了 spec/design/docs，执行对应任务前必须读取这些引用。
+- 如果实现时发现明显缺少长期 docs、关键代码区域或其他上下文，不要自行发散补全；先暂停并建议回到 `plan-change` 更新 plan/tasks。
 - 已完成任务只作为上下文，不重复执行，除非用户要求重做。
 
 ## 上下文恢复规则
@@ -115,7 +101,7 @@ docs/runbooks/
 - 本次明确不做什么。
 - 输入依据：来源 intents、specs、design。
 - 必须读取的运行态上下文。
-- 必须按需读取的长期 docs 路径或检索线索。
+- 必须按需读取的长期 docs 路径或未读取长期 docs 的理由。
 - 关键代码区域或实现入口。
 - 实现约束、依赖、风险和验证关注点。
 

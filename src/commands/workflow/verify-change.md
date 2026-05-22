@@ -14,6 +14,8 @@
 
 没有可重复、可信的验证信号，不能声称 verify 通过。
 
+`verify-change` 的重心是质量验证与一致性对齐，尤其是 code ↔ specs 的对齐。后续沉淀候选只由 `distill-change` 判断；verify 只提供证据，不提前决定哪些内容进入长期 `docs/`。
+
 ## change 参数
 
 执行本命令时必须确定目标 change。
@@ -92,7 +94,7 @@ git diff / git status
 
 读取规则：
 
-- specs 是 what 承诺。
+- specs 是最高优先级的 what 承诺，verify 首先验证实现是否满足 specs 中的 requirements 与 scenarios。
 - design 是 how 承诺。
 - plan/tasks 是实现承诺与执行证据。
 - docs 是长期约束来源。
@@ -107,7 +109,8 @@ git diff / git status
 - 重写 specs。
 - 重写 design。
 - 拆解任务。
-- 沉淀长期 docs。
+- 评估或筛选长期沉淀候选。
+- 判断哪些内容应该写入 `docs/`。
 - 归档 change。
 
 如果发现必须修改实现、spec、design 或 plan，记录问题和回流建议，交给对应命令处理。

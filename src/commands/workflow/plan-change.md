@@ -13,7 +13,7 @@
 
 其中：
 
-- `plan.md` 负责给后续 `implement-change` 提供足够上下文，尤其是必须遵循的长期文档、当前 change 的 specs/design、实现边界和风险。
+- `plan.md` 负责给后续 `implement-change` 提供足够上下文，包括当前 change 的 specs/design、实现边界、风险，以及按需使用的长期文档。
 - `tasks.md` 负责把实现计划拆成可执行、可验收的任务清单。
 
 `plan-change` 不执行代码实现。
@@ -67,7 +67,7 @@
 .workflow/templates/changes/tasks.md
 ```
 
-必须按需定位并读取相关长期文档：
+按需定位并读取相关长期文档：
 
 ```text
 docs/specs/
@@ -80,9 +80,9 @@ docs/runbooks/
 
 - `.workflow/changes/<change-id>/specs/` 是 what 基线。
 - `.workflow/changes/<change-id>/design/` 是 how 基线。
-- `docs/` 是项目长期约束来源，必须用于避免实现走偏。
-- `plan.md` 必须显式列出本次实现需要遵循的长期 docs 文档路径。
-- `plan.md` 必须列出 `implement-change` 启动前必须读取的上下文清单，包括 change specs、change design、长期 docs 和关键代码区域。
+- `docs/` 是项目长期约束来源，应按 capability、子域、模块、风险或实现路径判断是否需要读取。
+- `plan.md` 应显式说明本次实现需要遵循哪些长期 docs；如果判断无需读取长期 docs，也要说明原因。
+- `plan.md` 必须列出 `implement-change` 启动前必须读取的上下文清单，包括 change specs、change design、关键代码区域，以及相关时才需要读取的长期 docs。
 - 如果无法判断哪些 docs 相关，应搜索 docs 并根据 capability、子域、模块、风险关键词定位。
 - 已有 `plan.md` 或 `tasks.md` 存在时，读取后更新，不要直接覆盖。
 
@@ -149,11 +149,12 @@ docs/runbooks/
 因此 `plan.md` 必须包含：
 
 - 必须读取的上下文清单。
+- 长期 docs 使用情况：读取了哪些、如何使用，或为什么无需读取。
 - change-id 与所属 version。
 - 本 change 的来源 intents。
 - 本 change 的 specs 路径。
 - 本 change 的 design 路径；如果没有 design，说明原因。
-- 必须遵循的长期 docs 文档路径。
+- 按需读取的长期 docs 文档路径，或无需读取长期 docs 的理由。
 - 从长期 docs 中提炼出的实现约束。
 - 依赖分析与任务排序依据。
 - 可并行任务与不可并行任务的判断依据。
@@ -177,7 +178,7 @@ docs/runbooks/<topic>.md
 1. 确认目标 change。
 2. 检查 change 当前状态。
 3. 读取 roadmap、change intents、change specs、change design。
-4. 搜索并读取相关长期 docs。
+4. 按需读取长期 docs，并在 `plan.md` 中说明读取了哪些文档、如何使用它们；如果无需读取，也要说明理由。
 5. 判断实现边界、依赖、风险和验证关注点。
 6. 分析任务依赖、阶段顺序和并行机会。
 7. 创建或更新：
@@ -199,7 +200,7 @@ docs/runbooks/<topic>.md
 
 因此必须避免以下问题：
 
-- `plan.md` 没有列出必须读取的长期 docs 或 docs 检索线索。
+- `plan.md` 没有说明长期 docs 的使用情况：读取了哪些、如何使用，或为什么无需读取。
 - `plan.md` 没有列出关键代码区域或实现入口。
 - `plan.md` 没有说明 design 缺省理由。
 - `plan.md` 没有列出风险与验证关注点。
@@ -228,10 +229,10 @@ docs/runbooks/<topic>.md
 
 `plan.md` 至少包含：
 
-- 必须读取的上下文清单
+- 上下文清单
 - change 概览
 - 输入依据
-- 必须遵循的长期文档
+- 长期文档使用情况或无需读取的理由
 - 实现边界
 - 实现策略
 - 任务拆解依据
@@ -271,7 +272,7 @@ docs/runbooks/<topic>.md
 
 - 目标 change。
 - 创建或更新了 `plan.md` 和 `tasks.md`。
-- `plan.md` 引用了哪些长期 docs。
+- `plan.md` 引用了哪些长期 docs，或为什么无需读取长期 docs。
 - 当前阶段已完成：`plan-change`。
 - 解锁的下一步：`implement-change`。
 - 如果仍有阻塞，说明阻塞原因。
@@ -282,7 +283,7 @@ docs/runbooks/<topic>.md
 
 - 目标 change 已确认。
 - change intents、specs、design 或 design 缺省理由已读取。
-- 相关长期 docs 已定位并写入 `plan.md`。
+- 相关长期 docs 已按需定位；如未读取，已在 `plan.md` 中说明理由。
 - 任务依赖、阶段顺序和并行机会已分析。
 - `plan.md` 足以指导后续实现不偏离 specs/design/docs。
 - `tasks.md` 已将计划拆成可执行、可验收任务。

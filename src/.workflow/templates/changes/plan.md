@@ -1,8 +1,8 @@
 # plan
 
-## 必须读取的上下文
+## 上下文清单
 
-<!-- implement-change 启动前必须读取这些路径。必须具体到文件或目录，不要只写“参考 docs”。 -->
+<!-- implement-change 启动前应读取这些路径。必须具体到文件或目录，不要只写“参考 docs”。 -->
 
 ### 运行态上下文
 
@@ -13,6 +13,10 @@
 
 ### 长期文档上下文
 
+<!-- 按需列出本 change 实现需要遵循的长期 docs；如果无需读取，写明理由。 -->
+
+- 是否需要读取长期 docs：是/否
+- 读取或不读取理由：
 - `docs/specs/...`：
 - `docs/design/...`：
 - `docs/architecture/...`：
@@ -45,10 +49,12 @@
 - `.workflow/changes/<change-id>/design/`：
 - 如果没有 design，原因：
 
-## 必须遵循的长期文档
+## 长期文档使用
 
-<!-- 必须列出具体路径，不要只写“参考 docs”。 -->
+<!-- 按需列出具体路径；如果无需读取长期 docs，写明原因。 -->
 
+- 是否需要读取长期 docs：是/否
+- 读取或不读取理由：
 - `docs/specs/...`：
 - `docs/design/...`：
 - `docs/architecture/...`：

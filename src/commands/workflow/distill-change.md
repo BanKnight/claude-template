@@ -9,6 +9,7 @@
 - 长期 WHAT：`docs/specs/`
 - 长期 design：`docs/design/`
 - 长期 HOW / architecture / ADR：`docs/architecture/`
+- runbook：`docs/runbooks/`
 - project big picture：按需更新 `docs/project.md`
 
 `distill-change` 不是归档命令。它只负责让长期知识变成主线文档，归档由后续 `archive-version` 处理。
@@ -44,7 +45,7 @@
 
 - `verify-change` 已通过，且 change 准备收口或归档。
 - 用户要求“沉淀”“同步长期文档”“更新 docs”“归纳本次变更经验”。
-- change specs/design/verify 中存在未来版本会复用的 WHAT、HOW、架构决策、项目认知或 runbook 信息。
+- change specs/design/verify 中存在未来版本会复用的 WHAT、HOW、架构决策、runbook、项目认知或运行操作信息。
 - archive 前发现 change 的长期知识尚未写回 `docs/`。
 
 不要在以下情况强行进入：
@@ -77,6 +78,7 @@ docs/specs/
 docs/design/
 docs/architecture/
 docs/runbooks/
+docs/templates/
 ```
 
 按需检查：
@@ -95,6 +97,7 @@ git diff / git status
 - plan/tasks/implementation 是实际落地结果来源。
 - docs 是长期主线知识目标，更新前必须读取现有内容，避免重复、冲突或覆盖历史。
 - 如果长期文档不存在，可以创建；如果已存在，优先增量更新。
+- 创建长期文档时，优先使用 `docs/templates/` 中对应模板：`spec.md`、`design.md`、`architecture.md`、`adr.md`、`runbook.md`。
 
 ## 不负责
 
@@ -134,12 +137,33 @@ git diff / git status
 2. 检查 change 当前状态和 verify 结论。
 3. 读取 specs/design/verify，以及必要的 plan/tasks/artifacts/代码变更。
 4. 读取相关长期 docs，判断哪些知识需要沉淀。
-5. 分别处理 WHAT / HOW / project knowledge。
+5. 分别处理 WHAT / HOW / runbook / project knowledge。
 6. 更新对应 `docs/` 文件。
 7. 更新对应目录的 `index.md`。
 8. 汇报更新了哪些长期文档、哪些内容无需沉淀、哪些内容仍阻塞。
 
-## WHAT 沉淀规则
+## 模板映射规则
+
+`distill-change` 不是把 `.workflow/` 中的运行态文件原样复制到 `docs/`，而是基于已验证内容进行提炼。运行态模板和长期模板的对应关系如下：
+
+| 运行态来源 | 长期沉淀目标 | 长期模板 | 提炼方式 |
+|---|---|---|---|
+| `.workflow/changes/<change-id>/specs/<capability>/spec.md` | `docs/specs/<capability>/spec.md` | `docs/templates/spec.md` | 按 ADDED / MODIFIED / REMOVED / RENAMED 合并长期 WHAT |
+| `.workflow/changes/<change-id>/design/<subdomain>.md` | `docs/design/<topic>.md` | `docs/templates/design.md` | 提炼可复用设计结论、适用范围、规则和不适用场景 |
+| `.workflow/changes/<change-id>/design/architecture.md` + 实现结果 | `docs/architecture/<topic>.md` | `docs/templates/architecture.md` | 提炼当前主线架构状态、边界、依赖和架构规则 |
+| `.workflow/changes/<change-id>/design/*` 中的关键取舍 | `docs/architecture/adr/ADR-YYYYMMDD-*.md` | `docs/templates/adr.md` | 只为长期重要且需要追溯原因的架构决策创建 ADR |
+| `.workflow/changes/<change-id>/design/*` + `verify.md` + artifacts | `docs/runbooks/<topic>.md` | `docs/templates/runbook.md` | 提炼可重复执行的运维、迁移、发布、故障或人工操作步骤 |
+| change 过程中新确认的项目级认知 | `docs/project.md` | `docs/templates/project.md` | 只补充稳定项目认知，不写单次任务状态 |
+
+规则：
+
+- 新建长期文档时，必须使用对应 `docs/templates/*.md` 作为基础结构。
+- 更新已有长期文档时，先读取现有文档，再按其当前结构增量修改；不要为了套模板整文件重写。
+- 沉淀内容必须能追溯到已验证 change 和 verify 证据。
+- 未经过 verify 支撑的 design 只能保留在 `.workflow/changes/<change-id>/`，不能进入长期 docs。
+- 如果运行态 design 标记了“后续沉淀候选”，必须逐项判断是否真的值得进入长期 docs；候选不等于必须沉淀。
+
+
 
 WHAT 沉淀目标是：
 
@@ -162,7 +186,13 @@ docs/specs/<capability>/spec.md
 - 重复执行不应产生重复 requirement。
 - 找不到要修改或移除的 requirement 时，报告冲突，不要猜测合并。
 
-如果 capability 对应长期 spec 不存在，创建：
+如果 capability 对应长期 spec 不存在，使用模板创建：
+
+```text
+docs/templates/spec.md
+```
+
+目标路径：
 
 ```text
 docs/specs/<capability>/spec.md
@@ -199,6 +229,29 @@ docs/architecture/adr/
 
 长期 HOW 文档应面向“当前主线状态”，不是 change 过程记录。
 
+## runbook 沉淀规则
+
+如果本 change 产生了可重复执行的操作流程，应按需更新：
+
+```text
+docs/runbooks/<topic>.md
+```
+
+适合写入 runbook 的内容：
+
+- 发布、部署、回滚流程。
+- 数据迁移、补偿、恢复流程。
+- 故障排查或人工处置步骤。
+- 需要环境、权限、脚本或人工确认的重复操作。
+- verify 中已经执行并证明有效的操作步骤。
+
+不适合写入 runbook 的内容：
+
+- 一次性调试过程。
+- 没有验证过的临时操作。
+- 只对当前 change 有意义的任务记录。
+- 无法复现或缺少成功判定的步骤。
+
 ## project knowledge 沉淀规则
 
 如果本 change 改变或补充了项目整体认知，应按需更新：
@@ -228,6 +281,20 @@ docs/project.md
 - 描述必须基于阅读文档内容后编写，不能从文件名猜测。
 - 如果新增目录，也要创建或更新该目录的 `index.md`。
 
+## 长期文档模板
+
+创建新的长期文档时，优先使用项目本地模板：
+
+| 长期内容 | 模板 | 目标位置 |
+|---|---|---|
+| 长期 WHAT | `docs/templates/spec.md` | `docs/specs/<capability>/spec.md` |
+| 长期 design | `docs/templates/design.md` | `docs/design/<topic>.md` |
+| 系统级 HOW / architecture | `docs/templates/architecture.md` | `docs/architecture/<topic>.md` |
+| ADR | `docs/templates/adr.md` | `docs/architecture/adr/ADR-YYYYMMDD-<topic>.md` |
+| Runbook | `docs/templates/runbook.md` | `docs/runbooks/<topic>.md` |
+
+如果项目本地模板不存在，可以按相同结构创建最小文档；但应在完成后提示用户补齐 `docs/templates/`。
+
 ## 完成后输出
 
 完成后简短汇报：
@@ -235,7 +302,7 @@ docs/project.md
 - 目标 change。
 - verify 结论。
 - 更新了哪些长期 WHAT 文档。
-- 更新了哪些长期 HOW / architecture / ADR 文档。
+- 更新了哪些长期 HOW / architecture / ADR / runbook 文档。
 - 是否更新了 `docs/project.md`。
 - 哪些内容判断为无需沉淀。
 - 是否仍有冲突或阻塞。
@@ -247,9 +314,9 @@ docs/project.md
 
 - 目标 change 已确认。
 - 已读取 verify 证据，且不存在未解决 CRITICAL。
-- 已检查 WHAT / HOW / project knowledge 是否需要长期沉淀。
+- 已检查 WHAT / HOW / runbook / project knowledge 是否需要长期沉淀。
 - 需要沉淀的 specs 已合并到 `docs/specs/`。
-- 需要沉淀的 design/architecture/ADR 已写入 `docs/design/` 或 `docs/architecture/`。
+- 需要沉淀的 design/architecture/ADR/runbook 已写入 `docs/design/`、`docs/architecture/` 或 `docs/runbooks/`。
 - 如影响 project big picture，`docs/project.md` 已更新。
 - 对应 docs 索引已同步维护。
 - 没有只留在 `.workflow/changes/<change-id>/` 中、但未来仍需要复用的知识。

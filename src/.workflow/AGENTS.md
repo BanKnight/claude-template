@@ -57,9 +57,9 @@
 - `plan-roadmap` 更新 `.workflow/roadmap.md`，建立或更新 `.workflow/changes/<change-id>/intents.md`，并从 `.workflow/intents.md` 移出已分配意图。
 - `specify-change` 只更新 `.workflow/changes/<change-id>/specs/`，用于明确 what。
 - `design-change` 只更新 `.workflow/changes/<change-id>/design/`，用于明确 how。
-- `plan-change` 补齐 `.workflow/changes/<change-id>/plan.md` 与 `tasks.md`，其中 `plan.md` 必须提供实现上下文和长期 docs 引用。
+- `plan-change` 补齐 `.workflow/changes/<change-id>/plan.md` 与 `tasks.md`，其中 `plan.md` 必须提供实现上下文，并按需说明长期 docs 使用情况。
 - `implement-change`、`verify-change` 分别补齐实现状态与 verify 证据。
-- `distill-change` 才能把已验证的 change specs、design、implementation 经验沉淀到 `docs/specs/`、`docs/design/` 与 `docs/architecture/`。
+- `distill-change` 才能把已验证的 change specs、design、implementation 经验沉淀到 `docs/specs/`、`docs/design/`、`docs/architecture/` 与 `docs/runbooks/`。
 - `archive-version` 以 version 为单位归档，归档后从活跃 roadmap 移入 archive。
 
 ## 禁止事项
